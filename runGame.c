@@ -37,7 +37,7 @@ int main (int argc, char *argv[]) {
         turnOver = FALSE;
 
         while (!turnOver) {
-            // Get action from input
+            // Get action from user input
             printf ("Which player would you like to ask? \n");
             scanf ("%d", &a.player);
             printf ("Which card would you like to take? \n");
