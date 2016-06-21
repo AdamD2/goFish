@@ -33,20 +33,24 @@
 
 typedef struct _node *link;    // a link points to a node
 
+// This is the struct for a list node, including the valeu and suit
+// as well as a pointer to the next node or null
 typedef struct _node {
     int value;
     int suit;
     link next;
 } node;
 
-// a list is just represented by a pointer to a struct containing a 
+// A list is just represented by a pointer to a struct containing a 
 // a pointer to the first node in it 
 typedef struct _list{
     link head;
 } *list; 
 
+// Declare the ADT for the game struct
 typedef struct _game *Game;
 
+// Declare the struct to store an action taken by the player
 typedef struct _action {
     int card;
     int player;
