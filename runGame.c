@@ -8,6 +8,7 @@
 static void printTitle (char *title);
 static void turnPrompt (void);
 static void printHandDecision (Game g);
+static void setUpDeck (Game g);
 
 int main (int argc, char *argv[]) {
     int gameOver = FALSE;
@@ -23,9 +24,7 @@ int main (int argc, char *argv[]) {
     srand (time (NULL));
 
     // Initialise the deck and player hands
-    initialiseDeck (g);
-    shuffleDeck (g);
-    dealDeck (g);
+    setUpDeck (g);
 
     while (!gameOver) {
         // Print statistics
@@ -60,11 +59,11 @@ int main (int argc, char *argv[]) {
                 // Check if the current player and opponent have that card
                 if (checkPlayer (g, a) && checkOpponent (g, a)) {
                     // Give the current player the card and draw
-                    printf ("Take from player\n");
+                    printf ("I have that card, here you go.\n");
                     takeFromPlayer (g, a);
                     turnOver = FALSE;
                 } else {
-                    printf ("Take from deck\n");
+                    printf ("Go fish!\n");
                     popOffDeck (g);
                     turnOver = TRUE;
                 }
@@ -107,11 +106,18 @@ static void turnPrompt (void) {
 }
 
 static void printHandDecision (Game g) {
+    // Print out the player's hand if they are player 1, since they 
+    // are an AI otherwise
     if (getWhoseTurn (g) == PLAYER_1) {
         printf ("Your new hand is: \n");
         printHand (g);
     }
 }
 
+static void setUpDeck (Game g) {
+    initialiseDeck (g);
+    shuffleDeck (g);
+    dealDeck (g);
+}
 
 

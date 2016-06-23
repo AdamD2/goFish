@@ -85,7 +85,7 @@ void shuffleDeck (Game g) {
     // Move a card from a random position in the deck to the front
     // This happens 1000 times
     for (int i = 0; i < 1000; i++) {
-        random = rand() % 50 + 1;
+        random = rand () % 50 + 1;
         moveToFront (g->deck, random);
     }
 }
