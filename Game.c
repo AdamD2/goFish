@@ -176,6 +176,10 @@ int getPairs (Game g) {
     return g->playerArray[g->whoseTurn - 1].pairs;
 }
 
+list getDeck (Game g) {
+    return g->playerArray[g->whoseTurn - 1].playerHand;
+}
+
 int checkOpponent (Game g, action a) {
     link curr = g->playerArray[a.player-1].playerHand->head;
     int result = FALSE;

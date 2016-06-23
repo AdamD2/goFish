@@ -1,6 +1,6 @@
 An implementation of the go fish card game in C.
 
-Compile using:
-gcc -Wall -Werror -O -o goFish Game.c runGame.c
+It is recommended to compile this program using the following line:
+gcc -Wall -Werror -O -o goFish Game.c runGame.c ai.c
 
 Created by Adam Douglas and James Wardman.

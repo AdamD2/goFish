@@ -83,6 +83,7 @@ void printHand (Game g);
 int getWhoseTurn (Game g);
 int getRoundNumber (Game g);
 int getPairs (Game g);
+list getDeck (Game g);
 
 // Search through the current player's deck and search for pairs,
 // removing them and incrementing the pair count
@@ -97,3 +98,6 @@ void takeFromPlayer (Game g, action a);
 
 // Calculate and print the winner of a game
 void calculateWinner (Game g);
+
+// Return the length of a given list
+int listLength (list l);
