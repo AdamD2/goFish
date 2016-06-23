@@ -1,3 +1,6 @@
-My implementation of the go fish card game in C.
+An implementation of the go fish card game in C.
+
+Compile using:
+gcc -Wall -Werror -O -o goFish Game.c runGame.c
 
 Created by Adam Douglas and James Wardman.

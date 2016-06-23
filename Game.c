@@ -5,7 +5,7 @@
 
 #include "Game.h"
 
-static void removePair (Game g, link headCard);
+//static void removePair (Game g, link headCard);
 link findPrev (list l, link target);
 void bubbleSort (list l);
 int listLength (list l);
@@ -208,7 +208,7 @@ int checkPlayer (Game g, action a) {
 
 void findPairs (Game g) {
 }
-
+/*
 static void removePair (Game g, link headCard) {
     link prev = findPrev (g->playerArray[g->whoseTurn-1].playerHand,
     headCard);
@@ -243,7 +243,7 @@ static void removePair (Game g, link headCard) {
         prev->next = curr; 
     }
 }
-
+*/
 link findPrev (list l, link target) {
     link curr = l->head;
     link prev = NULL;

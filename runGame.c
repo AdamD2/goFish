@@ -89,10 +89,7 @@ static void printTitle (char *title) {
 }
 
 static void turnPrompt (void) {
-    printf ("Press a key and enter to go to the next player's turn...");
+    printf ("Press enter to go to the next player's turn...");
     getchar ();
-    while (getchar () == '\n') {
-        getchar();
-    }
     system ("clear");
 }
