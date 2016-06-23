@@ -67,8 +67,8 @@ void shuffleDeck (Game g);
 // Deal the deck to the player's hands
 void dealDeck (Game g);
 
-// Checks if the deck is empty and the game is over
-int isDeckEmpty (Game g);
+// Checks if the player's hands are all empty and the game is over
+int allCardsUsed (Game g);
 
 // Pops the card off the top of the deck into the current player's hand
 void popOffDeck (Game g);

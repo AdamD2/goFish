@@ -77,7 +77,7 @@ int main (int argc, char *argv[]) {
         nextTurn (g);
         turnPrompt ();
 
-        if (isDeckEmpty (g)) {
+        if (allCardsUsed (g)) {
             gameOver = TRUE;
         }
     }

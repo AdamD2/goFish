@@ -121,14 +121,24 @@ void dealDeck (Game g) {
     g->whoseTurn = 1;
 }
 
-int isDeckEmpty (Game g) {
-    int result = FALSE;
-    
-    // Check if the list is empty, if so setting result to true
-    if (g->deck->head == NULL) {
-        result = TRUE;
+int allCardsUsed (Game g) {
+    int result = TRUE;
+
+    // Store the original value of whoseTurn
+    int originalTurn = g->whoseTurn;
+
+    // If any of the players decks aren't null, the result is false 
+    g->whoseTurn = PLAYER_1; 
+    while (g->whoseTurn <= PLAYER_4) {
+        if (getDeck (g)->head != NULL) {
+            result = FALSE;
+        }
+
+        g->whoseTurn++;
     }
     
+    // Restore the original turn number
+    g->whoseTurn = originalTurn;
     return result;
 }
 
