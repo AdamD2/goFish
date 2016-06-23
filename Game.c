@@ -8,7 +8,6 @@
 //static void removePair (Game g, link headCard);
 link findPrev (list l, link target);
 void bubbleSort (list l);
-int listLength (list l);
 void swap (link elt);
 void append (list l, link val);
 
