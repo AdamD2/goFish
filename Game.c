@@ -183,7 +183,7 @@ int checkOpponent (Game g, action a) {
     link curr = g->playerArray[a.player-1].playerHand->head;
     int result = FALSE;
     
-    while (curr != NULL) {
+    while (curr != NULL && result == FALSE) {
         if (curr->value == a.card) {
             result = TRUE;
         }
@@ -198,7 +198,7 @@ int checkPlayer (Game g, action a) {
     link curr = g->playerArray[g->whoseTurn - 1].playerHand->head;
     int result = FALSE;
 
-    while (curr != NULL) {
+    while (curr != NULL && result == FALSE) {
         if (curr->value == a.card) {
             result = TRUE;
         }
