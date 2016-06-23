@@ -72,7 +72,7 @@ int main (int argc, char *argv[]) {
             printHandDecision (g);
         }
 
-//      findPairs (g);
+        findPairs (g);
 
         nextTurn (g);
         turnPrompt ();

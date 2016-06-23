@@ -5,7 +5,7 @@
 
 #include "Game.h"
 
-//static void removePair (Game g, link headCard);
+static void removePair (Game g, link headCard);
 link findPrev (list l, link target);
 void bubbleSort (list l);
 void swap (link elt);
@@ -220,43 +220,53 @@ int checkPlayer (Game g, action a) {
 }
 
 void findPairs (Game g) {
-}
-/*
-static void removePair (Game g, link headCard) {
-    link prev = findPrev (g->playerArray[g->whoseTurn-1].playerHand,
-    headCard);
-    link curr = g->playerArray[g->whoseTurn-1].playerHand->head;
-    link deadNode;
-    int count = 0;
-    int removed = FALSE;
+    list hand = g->playerArray[g->whoseTurn-1].playerHand;
+    link card = hand->head;
 
-    if (prev == NULL) {
-        while (count <= PAIR_SIZE) {
-            deadNode = curr;
-            curr = curr->next;
-            free (deadNode);
-            count++;
-        }
+    bubbleSort (hand);
 
-        g->playerArray[g->whoseTurn-1].playerHand->head = curr;
-    } else {
-        do {
-            if (curr == headCard) {
-                while (count <= PAIR_SIZE) {
-                    deadNode = curr;
-                    curr = curr->next;
-                    free (deadNode);
-                    count++;
-                }
-
-                removed = TRUE;
+    //This block runs through the player's hand and removes 4 cards if
+    // they are the same
+    if (listLength (hand) >= 4) { 
+        for (int i = 0; i < listLength (hand) - 3; i++) {
+            if (card->value == card->next->next->next->value) {
+                removePair (g, card);
+                g->playerArray[g->whoseTurn-1].pairs++;
+                card = card->next->next->next;
+                i += 3;
+                printf ("You've made a set of %d", card->value);
             }
-        } while (!removed);
-
-        prev->next = curr; 
+            card = card->next;
+        }
     }
 }
-*/
+
+static void removePair (Game g, link headCard) {
+    list hand = g->playerArray[g->whoseTurn-1].playerHand;
+    link curr = hand->head;
+    link prev = NULL;
+    link deadNode;
+    int rmCount = 0;
+
+    while (rmCount != 4) {
+        if (curr->value == headCard->value) {
+            deadNode = curr;
+            curr = curr->next;
+            if (prev == NULL) {
+                hand->head = curr;
+            } else {
+                prev->next = curr;
+            }
+            rmCount++;
+            free (deadNode);
+        } else {
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+
+}
+
 link findPrev (list l, link target) {
     link curr = l->head;
     link prev = NULL;
