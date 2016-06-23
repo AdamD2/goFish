@@ -5,8 +5,6 @@
 
 #include "Game.h"
 
-action decideAction (Game g);
-
 action decideAction (Game g) {
     action nextAction;
     int me = getWhoseTurn (g);
@@ -24,7 +22,7 @@ action decideAction (Game g) {
     // Choose a random player that isn't the current player to ask
     do {
         nextAction.player = rand() % NUM_PLAYERS + 1;
-    } while (nextAction.player != me);
+    } while (nextAction.player == me);
 
     return nextAction;
 }

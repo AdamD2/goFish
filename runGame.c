@@ -7,6 +7,7 @@
 
 static void printTitle (char *title);
 static void turnPrompt (void);
+static void printHandDecision (Game g);
 
 int main (int argc, char *argv[]) {
     int gameOver = FALSE;
@@ -31,17 +32,24 @@ int main (int argc, char *argv[]) {
         printf ("Round %d, player %d's turn.\n", getRoundNumber (g),
                 getWhoseTurn (g));
         printf ("---------------------------\n\n");
-        printf ("Your hand is: \n");
-        printHand (g);
 
         turnOver = FALSE;
+        printHandDecision (g);
 
         while (!turnOver) {
-            // Get action from user input
-            printf ("Which player would you like to ask? \n");
-            scanf ("%d", &a.player);
-            printf ("Which card would you like to take? \n");
-            scanf ("%d", &a.card);
+            // Get action from user input or AI 
+            if (getWhoseTurn (g) == PLAYER_1) {
+                printf ("Which player would you like to ask? \n");
+                scanf ("%d", &a.player);
+                printf ("Which card would you like to take? \n");
+                scanf ("%d", &a.card);
+            } else {
+                a = decideAction (g);
+                printf ("Which player would you like to ask? \n");
+                printf ("%d\n", a.player);
+                printf ("Which card would you like to take? \n");
+                printf ("%d\n", a.card);
+            }
 
             if (a.player < PLAYER_1 || a.player > PLAYER_2 ||
                 a.card < ACE || a.card > KING || a.player == getWhoseTurn (g)) {
@@ -61,9 +69,8 @@ int main (int argc, char *argv[]) {
                     turnOver = TRUE;
                 }
             }
-
-            printf ("Your new hand is: \n");
-            printHand (g);
+            
+            printHandDecision (g);
         }
 
 //      findPairs (g);
@@ -90,6 +97,21 @@ static void printTitle (char *title) {
 
 static void turnPrompt (void) {
     printf ("Press enter to go to the next player's turn...");
+
+    // Create a delay so that the previous enter doesn't trigger the
+    // next turn
+    for (int i = 0; i < 2147483647; i++) {}
+
     getchar ();
     system ("clear");
 }
+
+static void printHandDecision (Game g) {
+    if (getWhoseTurn (g) == PLAYER_1) {
+        printf ("Your new hand is: \n");
+        printHand (g);
+    }
+}
+
+
+

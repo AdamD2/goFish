@@ -101,3 +101,6 @@ void calculateWinner (Game g);
 
 // Return the length of a given list
 int listLength (list l);
+
+// Get an AI to randomly decide an action
+action decideAction (Game g);
