@@ -51,7 +51,7 @@ int main (int argc, char *argv[]) {
                 printf ("%d\n", a.card);
             }
 
-            if (a.player < PLAYER_1 || a.player > PLAYER_2 ||
+            if (a.player < PLAYER_1 || a.player > PLAYER_4 ||
                 a.card < ACE || a.card > KING || a.player == getWhoseTurn (g)) {
                 printf ("Invalid input. Draw a card. ");
                 popOffDeck (g);
@@ -96,13 +96,13 @@ static void printTitle (char *title) {
 }
 
 static void turnPrompt (void) {
-    printf ("Press enter to go to the next player's turn...");
+    printf ("Press space and enter to go to the next player's turn...");
 
     // Create a delay so that the previous enter doesn't trigger the
     // next turn
-    for (int i = 0; i < 2147483647; i++) {}
+    while (getchar () != ' ') {
+    }
 
-    getchar ();
     system ("clear");
 }
 
