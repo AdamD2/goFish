@@ -222,6 +222,7 @@ int checkPlayer (Game g, action a) {
 void findPairs (Game g) {
     list hand = g->playerArray[g->whoseTurn-1].playerHand;
     link card = hand->head;
+    link deadNode = NULL;
 
     bubbleSort (hand);
 
@@ -230,10 +231,11 @@ void findPairs (Game g) {
     if (listLength (hand) >= 4) { 
         for (int i = 0; i < listLength (hand) - 3; i++) {
             if (card->value == card->next->next->next->value) {
-                removePair (g, card);
                 g->playerArray[g->whoseTurn-1].pairs++;
+                deadNode = card;
                 card = card->next->next->next;
                 i += 3;
+                removePair (g, deadNode);
                 printf ("You've made a set of %d", card->value);
             }
             card = card->next;
