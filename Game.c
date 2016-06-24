@@ -144,10 +144,14 @@ int allCardsUsed (Game g) {
 
 void popOffDeck (Game g) {
     list l = g->deck;
-    link oldElement = l->head;
-    l->head = oldElement->next;
+    link oldElement;
 
-    append (g->playerArray[g->whoseTurn-1].playerHand, oldElement);
+    if (g->deck->head != NULL) {
+        oldElement = l->head;
+        l->head = oldElement->next;
+
+        append (g->playerArray[g->whoseTurn-1].playerHand, oldElement);
+    }
 }
 
 void nextTurn (Game g) {
@@ -248,7 +252,7 @@ static void removePair (Game g, link headCard) {
     link deadNode;
     int rmCount = 0;
 
-    while (rmCount != 4) {
+    while (rmCount < 4) {
         if (curr->value == headCard->value) {
             deadNode = curr;
             curr = curr->next;
