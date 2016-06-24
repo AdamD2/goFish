@@ -12,12 +12,16 @@ action decideAction (Game g) {
     int len = listLength (playerHand);
 
     // Choose a random card from the player's deck to ask for
-    int cardNumber = rand () % len;
-    link curr = playerHand->head;
-    for (int i = 0; i < cardNumber; i++) {
-        curr = curr->next;
+    if (len > 0) {
+        int cardNumber = rand () % len;
+        link curr = playerHand->head;
+        for (int i = 0; i < cardNumber; i++) {
+            curr = curr->next;
+        }
+        nextAction.card = curr->value;
+    } else {
+        nextAction.card = 0;
     }
-    nextAction.card = curr->value;
 
     // Choose a random player that isn't the current player to ask
     do {
