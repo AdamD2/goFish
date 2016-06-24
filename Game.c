@@ -393,6 +393,9 @@ void calculateWinner (Game g) {
     int originalWhoseTurn = g->whoseTurn;
     g->whoseTurn = player;
 
+    printf ("\n\n\n");
+    printf ("\n\nGame Over \n\n\n");
+
     while (player <= PLAYER_4) {
         printf ("Player %d has %d pairs.\n", player, getPairs (g));
         
@@ -407,7 +410,6 @@ void calculateWinner (Game g) {
 
     g->whoseTurn = originalWhoseTurn;
 
-    printf ("\n\nGame Over \n\n\n");
     printf ("Statistics:\n");
     printf ("Rounds - %d\n", getRoundNumber (g));
     printf ("Last Turn - %d\n", getWhoseTurn (g));
