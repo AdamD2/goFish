@@ -160,7 +160,7 @@ void nextTurn (Game g) {
 }
 
 void printHand (Game g) {
-    list l = g->playerArray[g->whoseTurn - 1].playerHand;
+    list l = g->playerArray[PLAYER_1-1].playerHand;
     link curr = l->head;
     printf ("[%d]", curr->value);
     curr = curr->next;
@@ -225,7 +225,7 @@ void findPairs (Game g) {
 
     bubbleSort (hand);
 
-    //This block runs through the player's hand and removes 4 cards if
+    // This block runs through the player's hand and removes 4 cards if
     // they are the same
     if (listLength (hand) >= 4) { 
         for (int i = 0; i < listLength (hand) - 3; i++) {

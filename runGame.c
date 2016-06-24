@@ -59,11 +59,11 @@ int main (int argc, char *argv[]) {
                 // Check if the current player and opponent have that card
                 if (checkPlayer (g, a) && checkOpponent (g, a)) {
                     // Give the current player the card and draw
-                    printf ("I have that card, here you go.\n");
+                    printf ("\nI have that card, here you go.\n");
                     takeFromPlayer (g, a);
                     turnOver = FALSE;
                 } else {
-                    printf ("Go fish!\n");
+                    printf ("\nGo fish!\n");
                     popOffDeck (g);
                     turnOver = TRUE;
                 }
@@ -110,6 +110,9 @@ static void printHandDecision (Game g) {
     // are an AI otherwise
     if (getWhoseTurn (g) == PLAYER_1) {
         printf ("Your new hand is: \n");
+        printHand (g);
+    } else {
+        printf ("Your hand is: \n");
         printHand (g);
     }
 }
