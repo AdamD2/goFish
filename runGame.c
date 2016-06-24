@@ -14,6 +14,7 @@ int main (int argc, char *argv[]) {
     int gameOver = FALSE;
     int turnOver = FALSE;
 
+    system ("clear");
     printTitle ("Welcome To Go Fish");
     
     // Create the game ADT and action structure
