@@ -108,7 +108,7 @@ static void turnPrompt (void) {
 static void printHandDecision (Game g) {
     // Print out the player's hand if they are player 1, since they 
     // are an AI otherwise
-    printf ("Your new hand is: \n");
+    printf ("Your hand is: \n");
     printHand (g);
 }
 
