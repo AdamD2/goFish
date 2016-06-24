@@ -243,7 +243,8 @@ void findPairs (Game g) {
                 card = card->next->next->next;
                 i += 3;
                 removePair (g, deadNode);
-                printf ("You've made a set of %d", card->value);
+                printf ("Player %d has made a set of %d\n\n",
+                g->whoseTurn, card->value);
             }
             card = card->next;
         }
