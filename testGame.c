@@ -11,12 +11,19 @@ void testFindPairs ();
 void caseOne (Game g);
 void caseTwo (Game g);
 void caseThree (Game g);
+void findSets (Game g);
+void setToZero (Game g); 
+void removeZero (Game g);
+void append (list l, link val);
 list newList ();
 void appendInt (list l, int val);
 int listCompare (list a, list b);
 void printList (list l); 
 void clearList ();
 void deleteNodes ();
+//BUBBLE SORT STUFF
+void bubbleSort (list l);
+void swap (link elt);
 
 typedef struct _player {
     list playerHand;
@@ -46,6 +53,7 @@ int main (int argc, char* argv[]) {
 void testClearList() {
     list test = newList();
 
+    // First test
     appendInt (test, 1);
     appendInt (test, 4);
     appendInt (test, 5);
@@ -55,6 +63,7 @@ void testClearList() {
 
     assert (test->head == NULL);
 
+    // Second test
     appendInt (test, 3);
     appendInt (test, 7);
     appendInt (test, 10);
@@ -64,7 +73,17 @@ void testClearList() {
     clearList (test);
 
     assert (test->head == NULL);
+
+    /* First test using a partial delete
+    appendInt (test, 1);
+    appendInt (test, 1);
+    appendInt (test, 2);
+    appendInt (test, 3);
+    appendInt (test, 4);
+    appendInt (test, 5);
     
+    clearBelow (test, 2);*/
+
     free (test);
 
     printf ("clearList tests passed.\n");
@@ -113,25 +132,27 @@ void testFindPairs () {
     // Create the game struct for testing
     Game g = newGame ();
 
-    printf ("Testing findPairs.\n");
+    printf ("Testing findSets.\n");
 
     // Simple Case
-    caseOne(g);
+    caseOne (g);
 
     // Segfault (but doesn't in test)
-    // caseTwo(g);
+    caseTwo (g);
 
     // Only picked up 2 pairs out of 3
-    // caseThree(g);
+    caseThree (g);
 
-    printf ("findPairs tests passed.\n");
+    disposeGame (g);
+
+    printf ("findSets tests passed.\n");
 }
 
 void caseOne(Game g) {
+    // Simple Case
     int testArray0[6] = {1, 2, 3, 4, 5, 6};
-    list test = newList ();
+    list test = g->playerArray[0].playerHand;
     list compList = newList ();
-    g->playerArray[0].playerHand = test;
 
     // Populate lists
     for (int i = 0; i < 6; i++) {
@@ -139,21 +160,23 @@ void caseOne(Game g) {
         appendInt (compList, testArray0[i]);
     }
 
-    findPairs (g);
+    findSets (g);
     assert (listCompare (test, compList));
+    printf ("Case one worked!\n");
     
     clearList (test);
-    free (test);
     clearList (compList);
     free (compList);
 }
 
 void caseTwo(Game g) {
+    // Segfault 
+    // EDIT: Doesn't cause segfault in this test
+    // EDIT 2: It does now
     int testArray1[17] = {4, 4, 4, 4, 5, 6, 7, 7, 8, 8, 8, 10, 12, 12,
                          12, 13, 13};
-    list test = newList ();
+    list test = g->playerArray[0].playerHand;
     list compList = newList ();
-    g->playerArray[0].playerHand = test;
 
     // Populate lists
     for (int i = 0; i < 17; i++) {
@@ -163,13 +186,38 @@ void caseTwo(Game g) {
         }
     }
 
-    findPairs (g);
+    // Tests lists
+    printHand (g);
+    findSets (g);
+    printHand (g);
     assert (listCompare (test, compList));
+    printf ("Case two worked!\n");
+
+    clearList (test);
+    clearList (compList);
+    free (compList);
 }
 
 void caseThree(Game g) {
-    // int testArray2[13] = {1, 1, 1, 1, 10, 10, 10, 10, 11, 11, 11, 11,
-       //                  12};
+    // Only removed 2/3 pairs
+    int testArray2[13] = {1, 1, 1, 1, 10, 10, 10, 10, 11, 11, 11, 11,
+                          12};
+    list test = g->playerArray[0].playerHand;
+    list compList = newList ();
+
+    // Populate lists
+    for (int i = 0; i < 13; i++) {
+        appendInt (test, testArray2[i]);
+    }
+    appendInt (compList, 12);
+
+    printHand (g);
+    findSets (g);
+    printHand (g);
+
+    assert (listCompare (test, compList));
+
+    printf ("Case three worked!\n");
 }
 
 list newList () {
@@ -181,6 +229,34 @@ list newList () {
     return l;
 }
 
+/*void findSets (Game g) {
+    list hand = g->playerArray[g->whoseTurn-1].playerHand;
+
+    bubbleSort (hand);
+
+    if (listLength (hand) >= PAIR_SIZE) {
+        setToZero (g);
+    }
+
+    removeZero (g);
+}
+
+void setToZero (Game g) {
+    list hand = g->playerArray[g->whoseTurn-1].playerHand;
+    link currCard = hand->head;
+
+    for (int i = 0; i < listLength (hand) - 3; i++) {
+            if (currCard->value == currCard->next->next->next->value) {
+                currCard->value = 0;
+                currCard->next->value = 0;
+                currCard->next->next->value = 0;
+                currCard->next->next->next->value = 0;
+                currCard = currCard->next->next->next;
+                i += 3;
+            }
+            currCard = currCard->next;
+        }
+}*/
 
 void appendInt (list l, int val) {
     link newLink = malloc (sizeof (node));

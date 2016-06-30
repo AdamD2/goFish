@@ -5,7 +5,8 @@
 
 #include "Game.h"
 
-static void removePair (Game g, link headCard);
+void removeZero (Game g);
+void setToZero (Game g); 
 link findPrev (list l, link target);
 void bubbleSort (list l);
 void swap (link elt);
@@ -47,7 +48,21 @@ Game newGame (void) {
     return g;
 }
 
+
 void disposeGame (Game g) {
+    // Free each player's hand as they will all be empty at this point
+    for (int i = PLAYER_1 - 1; i < PLAYER_4; i++) {
+        free (g->playerArray[i].playerHand);
+        g->playerArray[i].playerHand = NULL;
+        assert (g->playerArray[i].playerHand == NULL);
+    }
+
+    // Free the deck
+    free (g->deck);
+    g->deck = NULL;
+    assert (g->deck == NULL);
+
+    // Free the entire game
     free (g);
     g = NULL;
     assert (g == NULL);
@@ -226,44 +241,50 @@ int checkPlayer (Game g, action a) {
     return result;
 }
 
-void findPairs (Game g) {
+void findSets (Game g) {
     list hand = g->playerArray[g->whoseTurn-1].playerHand;
-    link card = hand->head;
-    link deadNode = NULL;
-    int value;
 
     bubbleSort (hand);
 
-    // This block runs through the player's hand and removes 4 cards if
-    // they are the same
-    if (listLength (hand) >= 4) { 
-        for (int i = 0; i < listLength (hand) - 3; i++) {
-            if (card->value == card->next->next->next->value) {
-                g->playerArray[g->whoseTurn-1].pairs++;
-                deadNode = card;
-                value = card->value;
-                card = card->next->next->next;
-                i += 3;
-                removePair (g, deadNode);
-                printf ("Player %d has made a set of %d.\n",
-                g->whoseTurn, value);
-                printf ("Player %d now has %d pair(s).\n\n", g->whoseTurn
-                , g->playerArray[g->whoseTurn-1].pairs);
-            }
-            card = card->next;
-        }
+    if (listLength (hand) >= PAIR_SIZE) {
+        setToZero (g);
     }
+
+    removeZero (g);
 }
 
-static void removePair (Game g, link headCard) {
+void setToZero (Game g) {
+    list hand = g->playerArray[g->whoseTurn-1].playerHand;
+    link currCard = hand->head;
+
+    // Set each card that is part of a set to 0
+    for (int i = 0; i < listLength (hand) - 3; i++) {
+            if (currCard->value == currCard->next->next->next->value) {
+                g->playerArray[g->whoseTurn - 1].pairs++;
+                printf ("Player %d has mad a set of %d\n",
+                        g->whoseTurn, currCard->value);
+                printf ("Player %d now has %d set(s)\n", g->whoseTurn,
+                        g->playerArray[g->whoseTurn - 1].pairs);
+                currCard->value = 0;
+                currCard->next->value = 0;
+                currCard->next->next->value = 0;
+                currCard->next->next->next->value = 0;
+                currCard = currCard->next->next->next;
+                i += 3;
+            }
+            currCard = currCard->next;
+        }
+}
+
+void removeZero (Game g) {
     list hand = g->playerArray[g->whoseTurn-1].playerHand;
     link curr = hand->head;
     link prev = NULL;
     link deadNode;
-    int rmCount = 0;
 
-    while (rmCount < 4) {
-        if (curr->value == headCard->value) {
+    // Remove and free every occurence of zero in the player's hand
+    while (curr != NULL) {
+        if (curr->value == 0) {
             deadNode = curr;
             curr = curr->next;
             if (prev == NULL) {
@@ -271,14 +292,12 @@ static void removePair (Game g, link headCard) {
             } else {
                 prev->next = curr;
             }
-            rmCount++;
             free (deadNode);
         } else {
             prev = curr;
             curr = curr->next;
         }
     }
-
 }
 
 link findPrev (list l, link target) {
@@ -371,7 +390,7 @@ void takeFromPlayer (Game g, action a) {
 
             append (player, curr);
 
-            //Store node for removal
+            //Store node for removal (Not sure if this is needed)
             curr = backup;
 
             //Remove card and patch (relink) opponent's hand

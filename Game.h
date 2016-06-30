@@ -87,7 +87,7 @@ list getDeck (Game g);
 
 // Search through the current player's deck and search for pairs,
 // removing them and incrementing the pair count
-void findPairs (Game g);
+void findSets (Game g);
 
 // Check if the opponent has the card specified and returns TRUE or FALSE
 int checkOpponent (Game g, action a);
