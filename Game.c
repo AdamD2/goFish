@@ -11,6 +11,7 @@ link findPrev (list l, link target);
 void bubbleSort (list l);
 void swap (link elt);
 void append (list l, link val);
+void printSpecificCard (int value); 
 
 typedef struct _player {
     list playerHand;
@@ -183,16 +184,27 @@ void printHand (Game g) {
     link curr = l->head;
 
     if (curr != NULL) {
-        printf ("[%d]", curr->value);
-        curr = curr->next;
-
-        while (curr != NULL) {
-            printf (" [%d]", curr->value);
+        do {
+            printSpecificCard (curr->value);
             curr = curr->next;
-        }
+        } while (curr != NULL); 
     }
 
     printf ("\n\n");
+}
+
+void printSpecificCard (int value) {
+    switch (value) {
+        case ACE: printf ("[A] "); 
+        break;
+        case JACK: printf ("[J] ");
+        break;
+        case QUEEN: printf ("[Q] ");
+        break;
+        case KING: printf ("[K] ");
+        break;
+        default: printf ("[%d] ", value);
+    }
 }
 
 int getWhoseTurn (Game g) {

@@ -31,6 +31,8 @@
 
 #define PAIR_SIZE 3
 
+#define ASCII_0 48
+
 typedef struct _node *link;    // a link points to a node
 
 // This is the struct for a list node, including the valeu and suit

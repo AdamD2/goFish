@@ -9,6 +9,8 @@ static void printTitle (char *title);
 static void turnPrompt (void);
 static void printHandDecision (Game g);
 static void setUpDeck (Game g);
+int letterToCard (char cardLetter); 
+char numberToCard (int cardNumber); 
 
 int main (int argc, char *argv[]) {
     int gameOver = FALSE;
@@ -20,6 +22,7 @@ int main (int argc, char *argv[]) {
     // Create the game ADT and action structure
     Game g = newGame ();
     action a;
+    char tempCard;
     
     // Initialise a seed for random number generation
     srand (time (NULL));
@@ -42,13 +45,17 @@ int main (int argc, char *argv[]) {
                 printf ("Which player would you like to ask? \n");
                 scanf ("%d", &a.player);
                 printf ("Which card would you like to take? \n");
-                scanf ("%d", &a.card);
+                scanf (" %c", &tempCard);
+
+                a.card = letterToCard (tempCard);
             } else {
                 a = decideAction (g);
+                tempCard = numberToCard (a.card);
+
                 printf ("Which player would you like to ask? \n");
                 printf ("%d\n", a.player);
                 printf ("Which card would you like to take? \n");
-                printf ("%d\n", a.card);
+                printf ("%c\n", tempCard);
             }
 
             if (a.player < PLAYER_1 || a.player > PLAYER_4 ||
@@ -119,4 +126,40 @@ static void setUpDeck (Game g) {
     dealDeck (g);
 }
 
+int letterToCard (char cardLetter) {
+    int cardNumber;
 
+    switch (cardLetter) {
+        case 'A': cardNumber = ACE;
+        break;
+        case 'J': cardNumber = JACK;
+        break;
+        case 'Q': cardNumber = QUEEN;
+        break;
+        case 'K': cardNumber = KING;
+        break;
+        default: cardNumber = (int)cardLetter - ASCII_0;
+    }
+
+    return cardNumber;
+}
+
+char numberToCard (int cardNumber) {
+    char cardLetter;
+
+    switch (cardNumber) {
+        case ACE: cardLetter = 'A';
+        break;
+        case 10: cardLetter = 'X';
+        break;
+        case JACK: cardLetter = 'J';
+        break;
+        case QUEEN: cardLetter = 'Q';
+        break;
+        case KING: cardLetter = 'K';
+        break;
+        default: cardLetter = (char)(cardNumber + ASCII_0);
+    }
+
+    return cardLetter;
+}
