@@ -273,7 +273,7 @@ void setToZero (Game g) {
     for (int i = 0; i < listLength (hand) - 3; i++) {
             if (currCard->value == currCard->next->next->next->value) {
                 g->playerArray[g->whoseTurn - 1].pairs++;
-                printf ("Player %d has mad a set of %d\n",
+                printf ("Player %d has made a set of %d\n",
                         g->whoseTurn, currCard->value);
                 printf ("Player %d now has %d set(s)\n", g->whoseTurn,
                         g->playerArray[g->whoseTurn - 1].pairs);
