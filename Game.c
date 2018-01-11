@@ -215,8 +215,8 @@ int getRoundNumber (Game g) {
     return g->roundNumber;
 }
 
-int getPairs (Game g) {
-    return g->playerArray[g->whoseTurn - 1].pairs;
+int getPairs (Game g, int player) {
+    return g->playerArray[player - 1].pairs;
 }
 
 list getDeck (Game g) {
@@ -273,10 +273,6 @@ void setToZero (Game g) {
     for (int i = 0; i < listLength (hand) - 3; i++) {
             if (currCard->value == currCard->next->next->next->value) {
                 g->playerArray[g->whoseTurn - 1].pairs++;
-                printf ("Player %d has made a set of %d\n",
-                        g->whoseTurn, currCard->value);
-                printf ("Player %d now has %d set(s)\n", g->whoseTurn,
-                        g->playerArray[g->whoseTurn - 1].pairs);
                 currCard->value = 0;
                 currCard->next->value = 0;
                 currCard->next->next->value = 0;
@@ -422,7 +418,7 @@ void takeFromPlayer (Game g, action a) {
 void calculateWinner (Game g) {
     int player = PLAYER_1;
 
-    int max = getPairs (g);
+    int max = getPairs (g, g->whoseTurn);
     int winner = g->whoseTurn;
 
     int originalWhoseTurn = g->whoseTurn;
@@ -431,11 +427,11 @@ void calculateWinner (Game g) {
     printf ("\n\nGame Over \n\n\n");
 
     while (player <= PLAYER_4) {
-        printf ("Player %d has %d pairs.\n", player, getPairs (g));
+        printf ("Player %d has %d pairs.\n", player, getPairs (g, player));
         
-        if (getPairs (g) > max) {
+        if (getPairs (g, player) > max) {
             winner = g->whoseTurn;
-            max = getPairs (g);
+            max = getPairs (g, player);
         }
 
         player++;
@@ -443,10 +439,11 @@ void calculateWinner (Game g) {
     }
 
     g->whoseTurn = originalWhoseTurn;
-
-    printf ("\nStatistics:\n");
-    printf ("Rounds - %d\n", getRoundNumber (g));
-    printf ("Last Turn - %d\n", getWhoseTurn (g));
-    printf ("Winner - Player %d!\n", winner);
-    printf ("\nThanks for playing.\n");
 }
+
+int handLength (Game g) {
+    list l = g->playerArray[PLAYER_1-1].playerHand;
+    return 4*listLength (l);
+}
+
+

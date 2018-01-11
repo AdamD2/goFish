@@ -1,9 +1,10 @@
 CC = gcc
 CFLAGS = -Wall -Werror
+LDFLAGS = -lncurses 
 OBJECTS = Game.o runGame.o ai.o
 
 goFish : Game.o runGame.o ai.o
-	 $(CC) -o goFish $(CFLAGS) $(OBJECTS)
+	 $(CC) -o goFish $(CFLAGS) $(LDFLAGS) $(OBJECTS)
 
 Game.o : Game.c
 	 cc -c Game.c

@@ -3,11 +3,15 @@
  * Date: 17-06-2016
  */
 
+// Libraries
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <time.h>
+#include <curses.h>
+#include <string.h>
 
+// Definitions
 #define ACE 1
 #define JACK 11
 #define QUEEN 12
@@ -32,6 +36,24 @@
 #define PAIR_SIZE 3
 
 #define ASCII_0 48
+
+// Macros
+#define clear_windows() wclear(stdscr);\
+                        wclear(title);\
+                        wclear(game);\
+                        wclear(stats)
+
+#define refresh_windows() wrefresh(title);\
+                          wrefresh(game);\
+                          wrefresh(stats)
+
+#define add_boxes() box(title, 0, 0);\
+                    box(game, 0, 0);\
+                    box(stats, 0, 0)
+
+#define delete_windows() delwin(title);\
+                         delwin(game);\
+                         delwin(stats)
 
 typedef struct _node *link;    // a link points to a node
 
@@ -84,7 +106,7 @@ void printHand (Game g);
 // Getter functions
 int getWhoseTurn (Game g);
 int getRoundNumber (Game g);
-int getPairs (Game g);
+int getPairs (Game g, int player);
 list getDeck (Game g);
 
 // Search through the current player's deck and search for pairs,
@@ -103,6 +125,8 @@ void calculateWinner (Game g);
 
 // Return the length of a given list
 int listLength (list l);
+// Return the string length of the player's hand
+int handLength (Game g);
 
 // Get an AI to randomly decide an action
 action decideAction (Game g);
