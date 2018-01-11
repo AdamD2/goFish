@@ -1,7 +1,18 @@
-# Go Fish
+Go Fish
+=======
+
+Overview
+--------
 
 An implementation of the go fish card game in C.
 
-To play the game, run  
-```make    
-./goFish```  
+Building
+--------
+
+To play the game, run:
+```
+git clone https://github.com/adamd2/gofish
+cd goFish/
+make
+./goFish
+```
